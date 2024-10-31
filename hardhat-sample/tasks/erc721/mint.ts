@@ -1,17 +1,22 @@
 import { task } from "hardhat/config"
+import { loadDeployedContractAddresses } from "../../helper/contractsJsonHelper";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 /**
  Example:
  hardhat erc721-mint \
- --contract 0x77337983A7D1699FaF51a5f43b9907fB7B614097 \
  --recipient 0x73faDd7E476a9Bc2dA6D1512A528366A3E50c3cF \
  --network rskTestnet
  */
 task("erc721-mint", "Mint token for BasicERC721 Smart Contract")
-	.addParam<string>("contract", "BasicERC721 Smart Contract Address")
 	.addParam<string>("recipient", "NFT Token Recipient")
-	.setAction(async (taskArgs, { ethers }) => {
-		const contract = await ethers.getContractAt("MockERC721", taskArgs.contract)
+	.setAction(async (taskArgs, hre: HardhatRuntimeEnvironment) => {
+		// get Contract Address
+		const {
+			contracts: {MockERC721},
+		} = loadDeployedContractAddresses(hre.network.name);
+
+		const contract = await hre.ethers.getContractAt("MockERC721", MockERC721)
 
 		const mintTrx = await contract.safeMint(taskArgs.recipient)
 

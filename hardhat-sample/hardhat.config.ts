@@ -4,35 +4,33 @@ import "hardhat-deploy";
 import "@nomiclabs/hardhat-solhint";
 import "solidity-coverage";
 import "dotenv/config";
+import fs from "fs";
+import path from "path";
+import * as dotenv from "dotenv";
 
-// Importing custom tasks
-import "./tasks/utils/accounts";
-import "./tasks/utils/balance";
-import "./tasks/utils/block-number";
-import "./tasks/utils/send-eth";
-
-import "./tasks/erc721/mint";
-import "./tasks/erc721/base-uri";
-import "./tasks/erc721/contract-uri";
-
-import "./tasks/erc20/mint";
-
-import "./tasks/erc1155/mint";
-import "./tasks/erc1155/base-uri";
-import "./tasks/erc1155/contract-uri";
+dotenv.config();
 
 // Environment variable setup
-const RSK_MAINNET_RPC_URL = process.env.RSK_MAINNET_RPC_URL;
-const RSK_TESTNET_RPC_URL = process.env.RSK_TESTNET_RPC_URL;
+const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
-// Ensure environment variables are configured
-if (!RSK_MAINNET_RPC_URL) {
-    throw new Error("The RPC URL for the mainnet is not configured.");
+// タスクファイルを読み込むための設定
+const SKIP_LOAD = process.env.SKIP_LOAD === "true";
+if (!SKIP_LOAD) {
+	const taskPaths = ["", "utils", "erc20", "erc721", "erc1155"];
+	taskPaths.forEach((folder) => {
+		const tasksPath = path.join(__dirname, "tasks", folder);
+		fs.readdirSync(tasksPath)
+			.filter((_path) => _path.includes(".ts"))
+			.forEach((task) => {
+				require(`${tasksPath}/${task}`);
+			});
+	});
 }
 
-if (!RSK_TESTNET_RPC_URL) { // Fixed duplicate check for RSK_MAINNET_RPC_URL
-    throw new Error("The RPC URL for the testnet is not configured.");
+// Ensure environment variables are configured
+if (!ALCHEMY_API_KEY) {
+    throw new Error("The ALCHEMY_API_KEY is not configured.");
 }
 
 if (!PRIVATE_KEY) {
@@ -44,22 +42,18 @@ const config: HardhatUserConfig = {
     defaultNetwork: "hardhat",
     networks: {
         hardhat: {
-            // If you want to do some forking, uncomment this
-            // forking: {
-            //   url: MAINNET_RPC_URL
-            // }
         },
         localhost: {
             url: "http://127.0.0.1:8545",
         },
         rskMainnet: {
-            url: RSK_MAINNET_RPC_URL,
+            url: `https://rootstock-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
             chainId: 30,
             gasPrice: 60000000,
             accounts: [PRIVATE_KEY]
         },
         rskTestnet: {
-            url: RSK_TESTNET_RPC_URL,
+            url: `https://rootstock-testnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
             chainId: 31,
             gasPrice: 60000000,
             accounts: [PRIVATE_KEY]

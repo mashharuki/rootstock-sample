@@ -1,17 +1,22 @@
 import { task } from "hardhat/config"
+import { loadDeployedContractAddresses } from "../../helper/contractsJsonHelper";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 /**
  Example:
  hardhat erc1155-contract-uri \
- --contract 0x320bd6de80d3D5361e1c9bB4CF1D7D9Ef24F3Ac7 \
  --uri https://ipfs.io/ipfs/new-contract-uri-ipfs-hash \
  --network rskTestnet
  */
 task("erc1155-contract-uri", "Set new Contract URI for BasicERC1155 Smart Contract")
-	.addParam<string>("contract", "BasicERC1155 Smart Contract Address")
 	.addParam<string>("uri", "New Contract URI")
-	.setAction(async (taskArgs, { ethers }) => {
-		const contract = await ethers.getContractAt("MockERC1155", taskArgs.contract)
+	.setAction(async (taskArgs, hre: HardhatRuntimeEnvironment) => {
+		// get Contract Address
+		const {
+			contracts: {MockERC1155},
+		} = loadDeployedContractAddresses(hre.network.name);
+
+		const contract = await hre.ethers.getContractAt("MockERC1155", MockERC1155)
 
 		console.log(`Current Contract URI: ${await contract.contractURI()}`)
 
