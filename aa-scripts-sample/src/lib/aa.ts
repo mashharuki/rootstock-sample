@@ -6,7 +6,8 @@ import {
 import { ethers } from "ethers";
 import * as dotenv from "dotenv";
 import { printOp, sleep } from "../helper/utils.ts";
-
+import { createTransferFuntionData } from "./erc20.ts";
+import { ERC20TokenAddress } from "./contstants.ts";
 dotenv.config();
 
 const { PRIVATE_KEY, CHAIN_ID, BUNDLER_API_KEY, CUSTOM_BUNDLER_URL } =
@@ -57,11 +58,8 @@ export const setUpPaymaster = async () => {
     ])
   );
   */
-  console.log(
-    await paymaster.checkWhitelist("0xB3aF6CFDDc444B948132753AD8214a20605692eF")
-  );
+
   console.log(`sponsorAddress: ${maetadata.sponsorAddress}`);
-  // console.log(await paymaster.deposit(0.000000001));
 };
 
 /**
@@ -166,6 +164,49 @@ export const transferWithPaymaster = async (to: string, amount: string) => {
         context: { mode: "sponsor" },
       },
     });
+    console.log(`Estimate UserOp: ${await printOp(op)}`);
+
+    // sign the UserOp and sending to the bundler...
+    const uoHash = await sdk.send(op);
+    console.log(`UserOpHash: ${uoHash}`);
+
+    // get transaction hash...
+    console.log("Waiting for transaction...");
+    let userOpsReceipt = null;
+    const timeout = Date.now() + 60000; // 1 minute timeout
+    while (userOpsReceipt == null && Date.now() < timeout) {
+      await sleep(2);
+      userOpsReceipt = await sdk.getUserOpReceipt(uoHash);
+    }
+    console.log("\x1b[33m%s\x1b[0m", `Transaction Receipt: `, userOpsReceipt);
+    return userOpsReceipt;
+  } catch (err: any) {
+    console.error(`error occured when transferring: ${err}`);
+    return null;
+  }
+};
+
+/**
+ * ERC20トークンを移転するメソッド
+ */
+export const transferERC20 = async (to: string, amount: string) => {
+  // エンコードデータを作成
+  const encodedData = await createTransferFuntionData(to, amount);
+  console.log(encodedData);
+
+  try {
+    // clear the transaction batch
+    await sdk.clearUserOpsFromBatch();
+
+    // add transactions to the batch
+    const transactionBatch = await sdk.addUserOpsToBatch({
+      to: ERC20TokenAddress,
+      data: encodedData,
+    });
+    console.log("transactions: ", transactionBatch);
+
+    // estimate transactions added to the batch and get the fee data for the UserOp
+    const op = await sdk.estimate();
     console.log(`Estimate UserOp: ${await printOp(op)}`);
 
     // sign the UserOp and sending to the bundler...

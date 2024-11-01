@@ -3,7 +3,8 @@
     "dev": "deno run --allow-all src/main.ts",
     "simpleTransfer": "deno run --allow-all src/simpleTransfer.ts",
     "transferWithPaymaster": "deno run --allow-all src/transferWithPaymaster.ts",
-    "deposit": "deno run --allow-all src/deposit.ts"
+    "deposit": "deno run --allow-all src/deposit.ts",
+    "transferERC20": "deno run --allow-all src/transferERC20.ts"
   },
   "imports": {
     "@etherspot/prime-sdk": "npm:@etherspot/prime-sdk@^1.8.2",
@@ -11,6 +12,7 @@
     "debug": "npm:debug@^4.3.7",
     "dotenv": "npm:dotenv@^16.4.5",
     "ethers": "npm:ethers@^6.13.4",
+    "jsonfile": "npm:jsonfile@^6.1.0",
     "viem": "npm:viem@^2.21.38"
   }
 }

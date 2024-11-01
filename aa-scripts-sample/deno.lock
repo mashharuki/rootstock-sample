@@ -7,6 +7,7 @@
     "npm:debug@^4.3.7": "4.3.7",
     "npm:dotenv@^16.4.5": "16.4.5",
     "npm:ethers@^6.13.4": "6.13.4",
+    "npm:jsonfile@^6.1.0": "6.1.0",
     "npm:viem@^2.21.38": "2.21.38_ws@8.18.0"
   },
   "jsr": {
@@ -1206,6 +1207,9 @@
         "get-intrinsic"
       ]
     },
+    "graceful-fs@4.2.11": {
+      "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ=="
+    },
     "graphql-tag@2.12.6_graphql@16.9.0": {
       "integrity": "sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==",
       "dependencies": [
@@ -1353,6 +1357,13 @@
     },
     "js-tokens@4.0.0": {
       "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
+    },
+    "jsonfile@6.1.0": {
+      "integrity": "sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==",
+      "dependencies": [
+        "graceful-fs",
+        "universalify"
+      ]
     },
     "keyvaluestorage-interface@1.0.0": {
       "integrity": "sha512-8t6Q3TclQ4uZynJY9IGr2+SsIGwK9JHcO6ootkHCGA0CrQCRy+VkouYNO2xicET6b9al7QKzpebNow+gkpCL8g=="
@@ -1767,6 +1778,9 @@
         "pathe"
       ]
     },
+    "universalify@2.0.1": {
+      "integrity": "sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw=="
+    },
     "unstorage@1.13.0_idb-keyval@6.2.1": {
       "integrity": "sha512-nrUXbFW00q8SqrJSgyyZ7OhNK1ugAF1wmOJu4V90Ww0V5b3CJSlcZt/V6D+2DktCuBZAoIcSIsn6gifwi8JgnQ==",
       "dependencies": [
@@ -1876,6 +1890,7 @@
       "npm:debug@^4.3.7",
       "npm:dotenv@^16.4.5",
       "npm:ethers@^6.13.4",
+      "npm:jsonfile@^6.1.0",
       "npm:viem@^2.21.38"
     ]
   }
