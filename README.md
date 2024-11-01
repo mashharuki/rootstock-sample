@@ -1,6 +1,7 @@
-# RootStack調査・学習用リポジトリ
+# RootStack 調査・学習用リポジトリ
 
 ### 参考文献
+
 1. [Luma - Bangkok Bitcoin Hackathon](https://lu.ma/bangkok-bitcoin-hack?tk=xMgcIE)
 2. [Notion - Encode Bangkok Bitcoin Hackathon Hacker Pack](https://encodeclub.notion.site/Encode-Bangkok-Bitcoin-Hackathon-Hacker-Pack-1206c123e77d80aba367ee97d32ced54)
 3. [Rootstack RPC](https://dev.rootstock.io/developers/rpc-api/rootstock/setup/)
@@ -14,3 +15,5 @@
 11. [RootStack Faucet](https://faucet.rootstock.io/)
 12. [RootStack RIF faucet](https://faucet.rifos.org/)
 13. [GitHub - Account Abstraction Kit](https://github.com/rsksmart/rsk-wagmi-starter-kit/tree/aa-sdk)
+14. [GitHub - etherspot-prime-sdk](https://github.com/etherspot/etherspot-prime-sdk/tree/master)
+15. [Etherspot - Example](https://etherspot.fyi/prime-sdk/examples/intro)
