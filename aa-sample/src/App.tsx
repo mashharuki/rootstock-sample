@@ -4,6 +4,10 @@ import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/Footer";
 import { Etherspot, Home, Wagmi } from "@/pages";
 
+/**
+ * App Component
+ * @returns
+ */
 function App() {
   return (
     <Router>

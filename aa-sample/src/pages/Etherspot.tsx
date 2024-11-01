@@ -1,5 +1,9 @@
 import Demo from "@/components/accountAbstraction/etherspot/Demo";
 
+/**
+ *  Etherspot Component
+ * @returns
+ */
 export function Etherspot(): JSX.Element {
   return (
     <section>

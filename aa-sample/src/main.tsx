@@ -6,6 +6,9 @@ import "./polyfills";
 import "@rainbow-me/rainbowkit/styles.css";
 import "./index.css";
 
+/**
+ * プロバイダーなどを設定するコンポーネント
+ */
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Providers>
