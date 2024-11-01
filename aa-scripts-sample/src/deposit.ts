@@ -14,8 +14,8 @@ const main = async () => {
   await setUpPaymaster();
   // addressを取得する
   const address = await getAddress();
-  // 残高を取得する。
-  await getBalance();
+  // ホワイトリストへの登録とdepositを行う。
+  await depositToPaymaster(address, "0.000006");
 };
 
 main()
