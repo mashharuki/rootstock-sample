@@ -4,7 +4,8 @@
     "simpleTransfer": "deno run --allow-all src/simpleTransfer.ts",
     "transferWithPaymaster": "deno run --allow-all src/transferWithPaymaster.ts",
     "deposit": "deno run --allow-all src/deposit.ts",
-    "transferERC20": "deno run --allow-all src/transferERC20.ts"
+    "transferERC20": "deno run --allow-all src/transferERC20.ts",
+    "transferNFT": "deno run --allow-all src/transferNFT.ts"
   },
   "imports": {
     "@etherspot/prime-sdk": "npm:@etherspot/prime-sdk@^1.8.2",

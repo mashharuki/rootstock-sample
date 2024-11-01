@@ -1,6 +1,6 @@
 import { task } from "hardhat/config"
-import { loadDeployedContractAddresses } from "../../helper/contractsJsonHelper";
-import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { loadDeployedContractAddresses } from "../../helper/contractsJsonHelper"
+import { HardhatRuntimeEnvironment } from "hardhat/types"
 
 /**
  Example:
@@ -13,8 +13,8 @@ task("erc721-mint", "Mint token for BasicERC721 Smart Contract")
 	.setAction(async (taskArgs, hre: HardhatRuntimeEnvironment) => {
 		// get Contract Address
 		const {
-			contracts: {MockERC721},
-		} = loadDeployedContractAddresses(hre.network.name);
+			contracts: { MockERC721 },
+		} = loadDeployedContractAddresses(hre.network.name)
 
 		const contract = await hre.ethers.getContractAt("MockERC721", MockERC721)
 

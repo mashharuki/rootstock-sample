@@ -37,3 +37,15 @@ deno add npm:@etherspot/prime-sdk
   ```bash
   deno task deposit
   ```
+
+- ERC20 token を送金する
+
+  ```bash
+  deno task transferERC20
+  ```
+
+- NFT を移転する。
+
+  ```bash
+  deno task transferNFT
+  ```
