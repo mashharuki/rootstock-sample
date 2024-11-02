@@ -18,7 +18,7 @@ const main = async () => {
   await transferNFTWithPaymaster(
     address,
     "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072",
-    1
+    4
   );
 };
 
