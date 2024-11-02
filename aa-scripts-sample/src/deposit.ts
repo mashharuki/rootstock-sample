@@ -2,7 +2,6 @@ import {
   createPrimeSDK,
   depositToPaymaster,
   getAddress,
-  getBalance,
   setUpPaymaster,
 } from "./lib/aa.ts";
 

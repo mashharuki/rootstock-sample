@@ -44,8 +44,20 @@ deno add npm:@etherspot/prime-sdk
   deno task transferERC20
   ```
 
+- ガスレスで ERC20 Token を送金する
+
+  ```bash
+  deno task transferERC20WithPaymaster
+  ```
+
 - NFT を移転する。
 
   ```bash
   deno task transferNFT
+  ```
+
+- ガスレスで NFT を移転する。
+
+  ```bash
+  deno task transferNFTWithPaymaster
   ```

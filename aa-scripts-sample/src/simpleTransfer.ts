@@ -1,6 +1,5 @@
 import {
   createPrimeSDK,
-  depositToPaymaster,
   getAddress,
   getBalance,
   setUpPaymaster,

@@ -231,6 +231,59 @@ export const transferERC20 = async (to: string, amount: string) => {
 };
 
 /**
+ * Paymasterにガス代を支払わせるERC20トークンを移転するメソッド
+ */
+export const transferERC20WithPaymaster = async (
+  to: string,
+  amount: string
+) => {
+  // エンコードデータを作成
+  const encodedData = await createTransferFuntionData(to, amount);
+  console.log(encodedData);
+
+  try {
+    // clear the transaction batch
+    await sdk.clearUserOpsFromBatch();
+
+    // add transactions to the batch
+    const transactionBatch = await sdk.addUserOpsToBatch({
+      to: ERC20TokenAddress,
+      data: encodedData,
+    });
+    console.log("transactions: ", transactionBatch);
+
+    // estimate transactions added to the batch and get the fee data for the UserOp
+    const op = await sdk.estimate({
+      paymasterDetails: {
+        url: `https://arka.etherspot.io?apiKey=arka_public_key&chainId=${Number(
+          CHAIN_ID
+        )}`,
+        context: { mode: "sponsor" },
+      },
+    });
+    console.log(`Estimate UserOp: ${await printOp(op)}`);
+
+    // sign the UserOp and sending to the bundler...
+    const uoHash = await sdk.send(op);
+    console.log(`UserOpHash: ${uoHash}`);
+
+    // get transaction hash...
+    console.log("Waiting for transaction...");
+    let userOpsReceipt = null;
+    const timeout = Date.now() + 60000; // 1 minute timeout
+    while (userOpsReceipt == null && Date.now() < timeout) {
+      await sleep(2);
+      userOpsReceipt = await sdk.getUserOpReceipt(uoHash);
+    }
+    console.log("\x1b[33m%s\x1b[0m", `Transaction Receipt: `, userOpsReceipt);
+    return userOpsReceipt;
+  } catch (err: any) {
+    console.error(`error occured when transferring: ${err}`);
+    return null;
+  }
+};
+
+/**
  * ERC721トークンを移転するメソッド
  */
 export const transferNFT = async (
@@ -255,6 +308,60 @@ export const transferNFT = async (
 
     // estimate transactions added to the batch and get the fee data for the UserOp
     const op = await sdk.estimate();
+    console.log(`Estimate UserOp: ${await printOp(op)}`);
+
+    // sign the UserOp and sending to the bundler...
+    const uoHash = await sdk.send(op);
+    console.log(`UserOpHash: ${uoHash}`);
+
+    // get transaction hash...
+    console.log("Waiting for transaction...");
+    let userOpsReceipt = null;
+    const timeout = Date.now() + 60000; // 1 minute timeout
+    while (userOpsReceipt == null && Date.now() < timeout) {
+      await sleep(2);
+      userOpsReceipt = await sdk.getUserOpReceipt(uoHash);
+    }
+    console.log("\x1b[33m%s\x1b[0m", `Transaction Receipt: `, userOpsReceipt);
+    return userOpsReceipt;
+  } catch (err: any) {
+    console.error(`error occured when transferring: ${err}`);
+    return null;
+  }
+};
+
+/**
+ * Paymasterにガス代を支払わせるERC721トークンを移転するメソッド
+ */
+export const transferNFTWithPaymaster = async (
+  from: string,
+  to: string,
+  tokenId: number
+) => {
+  // エンコードデータを作成
+  const encodedData = await createTransferNFTFunctionData(from, to, tokenId);
+  console.log(encodedData);
+
+  try {
+    // clear the transaction batch
+    await sdk.clearUserOpsFromBatch();
+
+    // add transactions to the batch
+    const transactionBatch = await sdk.addUserOpsToBatch({
+      to: ERC721TokenAddress,
+      data: encodedData,
+    });
+    console.log("transactions: ", transactionBatch);
+
+    // estimate transactions added to the batch and get the fee data for the UserOp
+    const op = await sdk.estimate({
+      paymasterDetails: {
+        url: `https://arka.etherspot.io?apiKey=arka_public_key&chainId=${Number(
+          CHAIN_ID
+        )}`,
+        context: { mode: "sponsor" },
+      },
+    });
     console.log(`Estimate UserOp: ${await printOp(op)}`);
 
     // sign the UserOp and sending to the bundler...

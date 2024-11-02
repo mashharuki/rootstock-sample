@@ -1,8 +1,7 @@
 import {
   createPrimeSDK,
-  getAddress,
   setUpPaymaster,
-  transferNFT,
+  transferERC20WithPaymaster,
 } from "./lib/aa.ts";
 
 /**
@@ -11,10 +10,11 @@ import {
 const main = async () => {
   createPrimeSDK();
   await setUpPaymaster();
-  // addressを取得する
-  const address = await getAddress();
-  // ERC721トークンを送金するメソッドを呼び出す。
-  await transferNFT(address, "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072", 1);
+  // ERC20トークンを送金するメソッドを呼び出す。
+  await transferERC20WithPaymaster(
+    "0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072",
+    "50"
+  );
 };
 
 main()

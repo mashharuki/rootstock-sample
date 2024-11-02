@@ -1,11 +1,4 @@
-import {
-  createPrimeSDK,
-  depositToPaymaster,
-  getAddress,
-  getBalance,
-  setUpPaymaster,
-  transferERC20,
-} from "./lib/aa.ts";
+import { createPrimeSDK, setUpPaymaster, transferERC20 } from "./lib/aa.ts";
 
 /**
  * メインスクリプト

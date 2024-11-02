@@ -131,6 +131,9 @@ yarn erc721-base-uri --uri https://ipfs.io/ipfs/new-base-uri-ipfs-hash/ --networ
 yarn erc721-mint --recipient 0x73faDd7E476a9Bc2dA6D1512A528366A3E50c3cF --network rskTestnet
 ```
 
+yarn erc721-mint --recipient 0xf934209D7ca0351aA1427E32Ed7Cc7e61F023307 --network rskTestnet
+0xf934209D7ca0351aA1427E32Ed7Cc7e61F023307
+
 ```bash
 yarn erc1155-contract-uri --uri https://ipfs.io/ipfs/new-contract-uri-ipfs-hash --network rskTestnet
 ```

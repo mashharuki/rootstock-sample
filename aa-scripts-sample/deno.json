@@ -5,7 +5,9 @@
     "transferWithPaymaster": "deno run --allow-all src/transferWithPaymaster.ts",
     "deposit": "deno run --allow-all src/deposit.ts",
     "transferERC20": "deno run --allow-all src/transferERC20.ts",
-    "transferNFT": "deno run --allow-all src/transferNFT.ts"
+    "transferERC20WithPaymaster": "deno run --allow-all src/transferERC20WithPaymaster.ts",
+    "transferNFT": "deno run --allow-all src/transferNFT.ts",
+    "transferNFTWithPaymaster": "deno run --allow-all src/transferNFTWithPaymaster.ts"
   },
   "imports": {
     "@etherspot/prime-sdk": "npm:@etherspot/prime-sdk@^1.8.2",
