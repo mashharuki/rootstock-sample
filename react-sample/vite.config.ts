@@ -26,5 +26,10 @@ export default defineConfig({
   },
   build: {
     target: "esnext",
+    /*
+    rollupOptions: {
+      external: ["subscriptions-transport-ws"],
+    },
+    */
   },
 });

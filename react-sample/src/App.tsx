@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import ServerSideVerification from "./pages/ServerSideVerification";
 import Transaction from "./pages/Transaction";
 import { Playground } from "./services/playground";
+import { PrimeSdkProvider } from "./services/PrimeSdkProvider";
 import web3AuthContextConfig from "./services/web3authContext";
 
 /**
@@ -22,16 +23,18 @@ function App() {
       <Web3AuthProvider config={web3AuthContextConfig}>
         <WalletServicesProvider context={Web3AuthInnerContext}>
           <Playground>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/">
-                  <Route index element={<HomePage />} />
-                  <Route path="contract" element={<Contract />} />
-                  <Route path="transaction" element={<Transaction />} />
-                  <Route path="server-side-verification" element={<ServerSideVerification />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
+            <PrimeSdkProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/">
+                    <Route index element={<HomePage />} />
+                    <Route path="contract" element={<Contract />} />
+                    <Route path="transaction" element={<Transaction />} />
+                    <Route path="server-side-verification" element={<ServerSideVerification />} />
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </PrimeSdkProvider>
           </Playground>
         </WalletServicesProvider>
       </Web3AuthProvider>
