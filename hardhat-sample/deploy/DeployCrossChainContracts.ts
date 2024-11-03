@@ -3,10 +3,22 @@ import { HardhatRuntimeEnvironment } from "hardhat/types"
 import { writeContractAddress } from "../helper/contractsJsonHelper"
 import { network } from "hardhat"
 
+/**
+ * CrossChain Contract
+ * @param hre
+ */
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 	const { deployer, owner } = await hre.getNamedAccounts()
 
-	const erc20 = await hre.deployments.deploy("MockERC20", {
+	// sender側のコントラクトデプロイする。
+	const sender = await hre.deployments.deploy("MessageSender", {
+		from: deployer,
+		args: [1000000, "MockERC20", "tRSK", owner],
+		log: true,
+	})
+
+	// receiver側のコントラクトデプロイする。
+	const receiver = await hre.deployments.deploy("MessageReceiver", {
 		from: deployer,
 		args: [1000000, "MockERC20", "tRSK", owner],
 		log: true,
@@ -15,8 +27,15 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 	// write Contract Address
 	writeContractAddress({
 		group: "contracts",
-		name: "MockERC20",
-		value: erc20.address,
+		name: "MessageSender",
+		value: sender.address,
+		network: network.name,
+	})
+
+	writeContractAddress({
+		group: "contracts",
+		name: "MessageReceiver",
+		value: receiver.address,
 		network: network.name,
 	})
 }

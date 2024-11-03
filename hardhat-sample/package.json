@@ -26,7 +26,8 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@openzeppelin/contracts": "5.0.2"
+		"@openzeppelin/contracts": "5.0.2",
+		"wormhole-solidity-sdk": "^0.8.0"
 	},
 	"devDependencies": {
 		"@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
