@@ -1,0 +1,38 @@
+# .github/workflows/hardhat-ci.yml
+name: Hardhat CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          cd hardhat-sample
+          yarn install
+
+      - name: Run Hardhat tests
+        run: |
+          cd hardhat-sample
+          yarn test
+
+      - name: Run Hardhat coverage
+        run: |
+          cd hardhat-sample
+          yarn coverage
