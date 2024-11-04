@@ -33,6 +33,7 @@ jobs:
           yarn test
         env:
           ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+          PRIVATE_KEY: ""
 
       - name: Run Hardhat coverage
         run: |
