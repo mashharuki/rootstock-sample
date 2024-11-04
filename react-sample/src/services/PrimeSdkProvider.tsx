@@ -7,13 +7,24 @@ import { usePlayground } from "./playground";
 
 export interface IPrimeSdkContext {
   sdk: any;
+  etherspotWalletAddress: string;
+  etherspotWalletBalance: string;
+  setEtherspotWalletAddress: (address: string) => void;
+  setEtherspotWalletBalance: (balance: string) => void;
   createContractWallet: () => Promise<any>;
   getBalance: () => Promise<any>;
   estimateAndExecute: (to: `0x${string}`, value: string, data: any) => Promise<any>;
 }
 
+/**
+ * PrimeSdkContext
+ */
 export const PrimeSdkContext = createContext<IPrimeSdkContext>({
   sdk: null,
+  etherspotWalletAddress: "",
+  etherspotWalletBalance: "",
+  setEtherspotWalletAddress: () => {},
+  setEtherspotWalletBalance: () => {},
   createContractWallet: async () => {},
   getBalance: async () => {},
   estimateAndExecute: async () => {},
@@ -23,7 +34,7 @@ interface IPrimeSdkProps {
   children?: ReactNode;
 }
 
-export function usePrimeSdk(): any {
+export function usePrimeSdk(): IPrimeSdkContext {
   return useContext(PrimeSdkContext);
 }
 
@@ -34,7 +45,7 @@ export const PrimeSdkProvider = ({ children }: IPrimeSdkProps) => {
   const [sdk, setSdk] = useState<any>();
   const [eoaWalletAddress, setEoaWalletAddress] = useState("");
   const [etherspotWalletAddress, setEtherspotWalletAddress] = useState("");
-  const [balance, setBalance] = useState<string>("");
+  const [etherspotWalletBalance, setEtherspotWalletBalance] = useState<string>("");
 
   const { getPrivateKey } = usePlayground();
 
@@ -50,7 +61,7 @@ export const PrimeSdkProvider = ({ children }: IPrimeSdkProps) => {
     }
 
     // signerを取得
-    const account = privateKeyToAccount(privateKey as `0x${string}`);
+    const account = privateKeyToAccount(`0x${privateKey}` as `0x${string}`);
     setEoaWalletAddress(account.address);
 
     const bundlerApiKey = "eyJvcmciOiI2NTIzZjY5MzUwOTBmNzAwMDFiYjJkZWIiLCJpZCI6IjMxMDZiOGY2NTRhZTRhZTM4MGVjYjJiN2Q2NDMzMjM4IiwiaCI6Im11cm11cjEyOCJ9";
@@ -59,7 +70,7 @@ export const PrimeSdkProvider = ({ children }: IPrimeSdkProps) => {
     // create PrimeSdk instance
     const primeSdk = new PrimeSdk(
       {
-        privateKey: privateKey as string,
+        privateKey: `0x${privateKey}` as string,
       },
       {
         chainId: Number(parseInt(chain.rootStockTestnet.chainId, 16)),
@@ -68,7 +79,7 @@ export const PrimeSdkProvider = ({ children }: IPrimeSdkProps) => {
     );
 
     // Contract Accountを取得する。
-    const address = await sdk.getCounterFactualAddress();
+    const address = await primeSdk.getCounterFactualAddress();
     console.log("Contract Account:", address);
     await getBalance();
 
@@ -83,14 +94,37 @@ export const PrimeSdkProvider = ({ children }: IPrimeSdkProps) => {
   const getBalance = async () => {
     if (!sdk) {
       console.log("SDK is not initialized");
-      return;
+      // get privateKey
+      const privateKey = await getPrivateKey();
+      // signerを取得
+      const account = privateKeyToAccount(`0x${privateKey}` as `0x${string}`);
+      setEoaWalletAddress(account.address);
+
+      const bundlerApiKey =
+        "eyJvcmciOiI2NTIzZjY5MzUwOTBmNzAwMDFiYjJkZWIiLCJpZCI6IjMxMDZiOGY2NTRhZTRhZTM4MGVjYjJiN2Q2NDMzMjM4IiwiaCI6Im11cm11cjEyOCJ9";
+      const customBundlerUrl = "https://rootstocktestnet-bundler.etherspot.io/";
+
+      // create PrimeSdk instance
+      const primeSdk = new PrimeSdk(
+        {
+          privateKey: `0x${privateKey}` as string,
+        },
+        {
+          chainId: Number(parseInt(chain.rootStockTestnet.chainId, 16)),
+          bundlerProvider: new EtherspotBundler(Number(parseInt(chain.rootStockTestnet.chainId, 16)), bundlerApiKey, customBundlerUrl),
+        }
+      );
+      // 残高を取得する
+      const balance = await primeSdk.getNativeBalance();
+      console.log("Account balance:", balance);
+      setEtherspotWalletBalance(balance.toString());
     }
 
     try {
       // 残高を取得する
       const balance = await sdk.getNativeBalance();
       console.log("Account balance:", balance);
-      setBalance(balance.toString());
+      setEtherspotWalletBalance(balance.toString());
     } catch (error) {
       console.error("Error fetching balance:", error);
     } finally {
@@ -149,6 +183,10 @@ export const PrimeSdkProvider = ({ children }: IPrimeSdkProps) => {
 
   const primeSdkProvider = {
     sdk,
+    etherspotWalletAddress,
+    etherspotWalletBalance,
+    setEtherspotWalletAddress,
+    setEtherspotWalletBalance,
     createContractWallet,
     getBalance,
     estimateAndExecute,

@@ -1,9 +1,10 @@
-import React from "react";
-
 import { usePlayground } from "../services/playground";
 import ConnectWeb3AuthButton from "./ConnectWeb3AuthButton";
-import SourceCode from "./SourceCode";
 
+/**
+ * Not connected page component
+ * @returns
+ */
 const NotConnectedPage = () => {
   const { isLoading } = usePlayground();
 
@@ -23,7 +24,6 @@ const NotConnectedPage = () => {
           <ConnectWeb3AuthButton />
         )}
       </div>
-      <SourceCode />
     </div>
   );
 };

@@ -3,16 +3,6 @@ import { CHAIN_NAMESPACES, CustomChainConfig } from "@web3auth/base";
 export const chain: {
   [key: string]: CustomChainConfig;
 } = {
-  sepolia: {
-    chainNamespace: CHAIN_NAMESPACES.EIP155,
-    chainId: "0xaa36a7",
-    displayName: "Ethereum Sepolia",
-    tickerName: "Ethereum",
-    ticker: "ETH",
-    rpcTarget: "https://rpc.ankr.com/eth_sepolia",
-    blockExplorerUrl: "https://sepolia.etherscan.io",
-    logo: "https://web3auth.io/images/web3authlog.png",
-  },
   rootStockTestnet: {
     chainNamespace: CHAIN_NAMESPACES.EIP155,
     chainId: "0x1f",
@@ -22,6 +12,16 @@ export const chain: {
     ticker: "tRBTC",
     tickerName: "tRBTC",
     logo: "https://pbs.twimg.com/profile_images/1592915327343624195/HPPSuVx3_400x400.jpg",
+  },
+  sepolia: {
+    chainNamespace: CHAIN_NAMESPACES.EIP155,
+    chainId: "0xaa36a7",
+    displayName: "Ethereum Sepolia",
+    tickerName: "Ethereum",
+    ticker: "ETH",
+    rpcTarget: "https://rpc.ankr.com/eth_sepolia",
+    blockExplorerUrl: "https://sepolia.etherscan.io",
+    logo: "https://web3auth.io/images/web3authlog.png",
   },
   // SKALE: {
   //   chainNamespace: CHAIN_NAMESPACES.EIP155,

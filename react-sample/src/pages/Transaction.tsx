@@ -1,12 +1,11 @@
 import { useWeb3Auth } from "@web3auth/modal-react-hooks";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Console from "../components/Console";
 import Form from "../components/Form";
 import Header from "../components/Header";
 import NotConnectedPage from "../components/NotConnectedPage";
 import Sidebar from "../components/Sidebar";
-import SourceCode from "../components/SourceCode";
 import Tabs from "../components/Tabs";
 import { usePlayground } from "../services/playground";
 
@@ -15,8 +14,8 @@ function Transaction() {
   const { isConnected } = useWeb3Auth();
 
   const [message, setMessage] = useState("Welcome to Web3Auth");
-  const [address, setAddress] = useState("0xeaA8Af602b2eDE45922818AE5f9f7FdE50cFa1A8");
-  const [amount, setAmount] = useState("0.01");
+  const [address, setAddress] = useState("0x51908F598A5e0d8F1A3bAbFa6DF76F9704daD072");
+  const [amount, setAmount] = useState("0.001");
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState("signMessage");
 
@@ -109,7 +108,6 @@ function Transaction() {
               </Form>
             )}
             <Console />
-            <SourceCode />
           </div>
         ) : (
           <NotConnectedPage />

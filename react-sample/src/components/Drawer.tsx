@@ -1,7 +1,6 @@
 import { WALLET_ADAPTERS } from "@web3auth/base";
 import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import { useWalletServicesPlugin } from "@web3auth/wallet-services-plugin-react-hooks";
-import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import UserProfile from "../components/UserProfile";
@@ -11,6 +10,10 @@ interface DrawerProps {
   isOpen: boolean;
   setOpen: any;
 }
+
+/**
+ * Drawer component
+ */
 const Drawer = ({ isOpen, setOpen }: DrawerProps) => {
   const { connectedChain } = usePlayground();
   const { showCheckout, showWalletConnectScanner, showWalletUI } = useWalletServicesPlugin();
@@ -26,22 +29,7 @@ const Drawer = ({ isOpen, setOpen }: DrawerProps) => {
   function goToContract() {
     navigate("/contract");
   }
-  function goToServerSideVerification() {
-    navigate("/server-side-verification");
-  }
-  function goToExplorer() {
-    window.open(connectedChain.blockExplorerUrl);
-  }
-  function goToFaucet() {
-    if (connectedChain.chainId === "0xaa36a7") {
-      window.open("https://www.infura.io/faucet/sepolia");
-    } else if (connectedChain.chainId === "0x13882") {
-      window.open("https://faucet.polygon.technology/");
-    }
-  }
-  function goToSounceCode() {
-    window.open("https://github.com/Web3Auth/web3auth-pnp-examples/tree/main/web-modal-sdk/react-modal-playground");
-  }
+
   const location = useLocation();
   function linktoGo(label: string, path: any, id: number) {
     return (
@@ -74,18 +62,10 @@ const Drawer = ({ isOpen, setOpen }: DrawerProps) => {
               {location.pathname === "/contract"
                 ? activePage("Smart Contract Interactions", 3)
                 : linktoGo("Smart Contract Interactions", goToContract, 3)}
-              {location.pathname === "/server-side-verification"
-                ? activePage("Server Side Verification", 4)
-                : linktoGo("Server Side Verification", goToServerSideVerification, 4)}
               {isConnected && web3Auth.connectedAdapterName === WALLET_ADAPTERS.AUTH ? (
                 <>
                   {linktoGo("WalletConnect Scanner", showWalletConnectScanner, 6)}
                   {linktoGo("Wallet UI", showWalletUI, 7)}
-                  {connectedChain.chainId === "0xaa36a7" || connectedChain.chainId === "0x13882"
-                    ? linktoGo("Faucet Link", goToFaucet, 8)
-                    : linktoGo("Fiat On Ramp", showCheckout, 8)}
-                  {linktoGo("Explorer Link", goToExplorer, 9)}
-                  {linktoGo("Source Code", goToSounceCode, 10)}
                 </>
               ) : null}
               <div

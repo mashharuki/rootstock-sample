@@ -1,7 +1,7 @@
 import { ADAPTER_STATUS, CustomChainConfig, IProvider, WALLET_ADAPTERS } from "@web3auth/base";
 import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import * as jose from "jose";
-import React, { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 
 import { chain } from "../config/chainConfig";
 import { getWalletProvider, IWalletProvider } from "./walletProvider";
@@ -74,10 +74,10 @@ export const Playground = ({ children }: IPlaygroundProps) => {
   const [address, setAddress] = useState<string | null>(null);
   const [balance, setBalance] = useState<string | null>(null);
   const [chainList, setChainDetails] = useState(chain);
-  const [chainListOptionSelected, setChainListOptionSelected] = useState("ethereum");
+  const [chainListOptionSelected, setChainListOptionSelected] = useState("rootStockTestnet");
   const [chainId, setChainId] = useState<any>(null);
   const [playgroundConsole, setPlaygroundConsole] = useState<string>("");
-  const [connectedChain, setConnectedChain] = useState<CustomChainConfig>(chain.ethereum);
+  const [connectedChain, setConnectedChain] = useState<CustomChainConfig>(chain.rootStockTestnet);
   const uiConsole = (...args: unknown[]) => {
     setPlaygroundConsole(`${JSON.stringify(args || {}, null, 2)}\n\n\n\n${playgroundConsole}`);
     console.log(...args);
@@ -174,7 +174,7 @@ export const Playground = ({ children }: IPlaygroundProps) => {
       return "";
     }
     const privateKey = await walletProvider.getPrivateKey();
-    uiConsole("Private Key: ", privateKey);
+    //uiConsole("Private Key: ", privateKey);
     return privateKey;
   };
 
