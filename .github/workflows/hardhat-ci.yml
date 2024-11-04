@@ -31,6 +31,8 @@ jobs:
         run: |
           cd hardhat-sample
           yarn test
+        env:
+          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
 
       - name: Run Hardhat coverage
         run: |
