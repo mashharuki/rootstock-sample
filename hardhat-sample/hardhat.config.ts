@@ -1,12 +1,12 @@
 import "@nomicfoundation/hardhat-toolbox";
-import { HardhatUserConfig } from "hardhat/config";
-import "hardhat-deploy";
 import "@nomiclabs/hardhat-solhint";
-import "solidity-coverage";
+import * as dotenv from "dotenv";
 import "dotenv/config";
 import fs from "fs";
+import "hardhat-deploy";
+import { HardhatUserConfig } from "hardhat/config";
 import path from "path";
-import * as dotenv from "dotenv";
+import "solidity-coverage";
 
 dotenv.config();
 
@@ -31,10 +31,6 @@ if (!SKIP_LOAD) {
 // Ensure environment variables are configured
 if (!ALCHEMY_API_KEY) {
     throw new Error("The ALCHEMY_API_KEY is not configured.");
-}
-
-if (!PRIVATE_KEY) {
-    throw new Error("Private key is not configured.");
 }
 
 // Hardhat configuration
