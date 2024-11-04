@@ -1,6 +1,5 @@
 import { useWeb3Auth } from "@web3auth/modal-react-hooks";
 import web3AuthLogoWhite from "../assets/web3authLogoWhite.svg";
-import { usePrimeSdk } from "../services/PrimeSdkProvider";
 
 /**
  * ConnectWeb3AuthButton component
@@ -8,7 +7,6 @@ import { usePrimeSdk } from "../services/PrimeSdkProvider";
  */
 const ConnectWeb3AuthButton = () => {
   const { isConnected, connect } = useWeb3Auth();
-  const { createContractWallet } = usePrimeSdk();
 
   if (isConnected) {
     return null;
@@ -17,12 +15,7 @@ const ConnectWeb3AuthButton = () => {
     <div
       className="flex flex-row rounded-full px-6 py-3 text-white justify-center align-center cursor-pointer"
       style={{ backgroundColor: "#0364ff" }}
-      onClick={async () => {
-        // まずWeb3Authに接続する。
-        await connect();
-        // その後、AA用のコントラクトウォレットを作成する。
-        await createContractWallet();
-      }}
+      onClick={connect}
     >
       <img src={web3AuthLogoWhite} className="headerLogo" />
       Connect to Web3Auth

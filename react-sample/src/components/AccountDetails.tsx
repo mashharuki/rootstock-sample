@@ -27,7 +27,7 @@ function AccountDetails({ children }: AccountDetailsProps) {
     chainListOptionSelected,
   } = usePlayground();
 
-  const { etherspotWalletAddress, etherspotWalletBalance, createContractWallet } = usePrimeSdk();
+  const { etherspotWalletAddress, etherspotWalletBalance, createContractWallet, setUpPaymaster } = usePrimeSdk();
 
   const { userInfo, web3Auth, isConnected } = useWeb3Auth();
   const [addressToShow, setAddressToShow] = useState<string>(address || "");
@@ -45,6 +45,7 @@ function AccountDetails({ children }: AccountDetailsProps) {
       if (!etherspotWalletAddress || !etherspotWalletBalance) {
         await createContractWallet();
       }
+      await setUpPaymaster();
     };
     init();
   }, [selectedChain, address]);
