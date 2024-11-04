@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Contract from "./pages/Contract";
 import HomePage from "./pages/HomePage";
 // import NFT from "./pages/NFT";
+import AccountAbstraction from "./pages/AccountAbstraction";
 import Transaction from "./pages/Transaction";
 import { Playground } from "./services/playground";
 import { PrimeSdkProvider } from "./services/PrimeSdkProvider";
@@ -29,6 +30,7 @@ function App() {
                     <Route index element={<HomePage />} />
                     <Route path="contract" element={<Contract />} />
                     <Route path="transaction" element={<Transaction />} />
+                    <Route path="accountabstraction" element={<AccountAbstraction />} />
                   </Route>
                 </Routes>
               </BrowserRouter>

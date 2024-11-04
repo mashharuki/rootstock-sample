@@ -24,6 +24,10 @@ const Sidebar = () => {
     navigate("/contract");
   }
 
+  function goToAccountAbstraction() {
+    navigate("/accountabstraction");
+  }
+
   const location = useLocation();
 
   function linktoGo(label: string, path: any, id: number) {
@@ -59,6 +63,9 @@ const Sidebar = () => {
                 ? activePage("Smart Contract Interactions", 3)
                 : linktoGo("Smart Contract Interactions", goToContract, 3)}
               {isConnected && web3Auth.connectedAdapterName === WALLET_ADAPTERS.AUTH && <>{linktoGo("Wallet UI", showWalletUI, 7)}</>}
+              {isConnected && web3Auth.connectedAdapterName === WALLET_ADAPTERS.AUTH && (
+                <>{linktoGo("AccountAbstraction", goToAccountAbstraction, 7)}</>
+              )}
             </nav>
           </div>
           <UserProfile />
